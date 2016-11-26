@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Forum">
+<head>
+    <meta charset="UTF-8">
+    <title>ReactJS and Flux</title>
+    <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+    <script src="app/app.module.js"></script>
+    <script src="app/services/answer.service.js"></script>
+    <script src="app/directives/answer.directive.js"></script>
+    <script src="app/answers/answers.controller.js"></script>
+</head>
+<body>
+    <section ng-controller="AnswersController as Answers">
+        <div>
+            <nav class="navbar navbar-default">
+              <div class="container-fluid">
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="#">
+                    React Forum
+                  </a>
+                </div>
+              </div>
+            </nav>
+            <div class="container">
+                <div>
+                    <h1>What is React and Flux?</h1>
+                    <p>
+                        I don't understand React or Flux. Can someone help me?
+                    </p>
+                </div>
+                <hr />
+                <div ng-repeat="(id, ans) in Answers.answers">
+                    <answer />
+                </div>
+                <hr />
+                <h4>Add an answer</h4>
+                <div>
+                    <textarea class="col-md-6 col-xs-8" ng-model="Answers.newAnswerText"></textarea>
+                    &nbsp;
+                    <input type="button" class="btn btn-primary" value="Add" ng-click="Answers.addAnswer()" />
+                </div>
+            </div>
+        </div>
+    </section>
+</body>
+</html>
