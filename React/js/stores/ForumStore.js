@@ -1,3 +1,7 @@
+var EventEmitter = require('events').EventEmitter;
+var ForumDispatcher = require('../dispatcher/ForumDispatcher');
+var ForumConstants = require('../constants/ForumConstants');
+
 var answerData = {
     "1": {
         body: "Isn't that about time travel?",
@@ -15,19 +19,19 @@ var answerData = {
 
 var ForumStore = new EventEmitter();
 
-ForumStore.emitChange=function () {
-    this.emit('change');
-}
+ForumStore.emitChange = function() {
+    this.emit('change');  
+};
 
-ForumStore.addChangeListener=function (listener) {
-    this.on('change',listener);
-}
+ForumStore.addChangeListener = function(listener) {
+    this.on('change', listener);
+};
 
-ForumStore.getAnswers = function () {
+ForumStore.getAnswers = function() {
     return answerData;
 };
 
-ForumStore.addAnswer = function (newAnswer) {
+ForumStore.addAnswer = function(newAnswer) {
     answerData[Object.keys(answerData).length + 1] = {
         body: newAnswer,
         correct: false
@@ -35,27 +39,29 @@ ForumStore.addAnswer = function (newAnswer) {
     this.emitChange();
 };
 
-ForumStore.markAsCorrect=function (id) {
-    for (var key in answerData) {
-        answerData[key].correct=false;
-    }
-    answerData[id].correct=true;
-    this.emitChange();
-};
+ForumStore.markAsCorrect = function(id) {
 
-ForumDispatcher.register(function (action) {
-    switch (action.actionType) {
-        case 'FORUM_ANSWER_ADDED':{
-            console.log('Answer added!');
+    for (key in answerData) {
+        answerData[key].correct = false;
+    }
+
+    answerData[id].correct = true;
+    this.emitChange();
+}
+
+ForumDispatcher.register(function(action) {
+
+    switch(action.actionType) {
+        case ForumConstants.FORUM_ANSWER_ADDED: {
             ForumStore.addAnswer(action.newAnswer);
             break;
         }
-        case 'FORUM_ANSWER_MARKED_CORRECT':{
-            console.log('Answer marked correct!');
+        case ForumConstants.FORUM_ANSWER_MARKED_CORRECT: {
             ForumStore.markAsCorrect(action.id);
             break;
         }
-        default:
-            break;
     }
+    
 });
+
+module.exports = ForumStore;

@@ -1,15 +1,25 @@
 {
-  "name": "react",
+  "name": "react-app",
   "version": "1.0.0",
-  "description": "react for angular developers",
+  "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "babel js -d lib --presets react"
+    "start": "watchify js/app.js -o lib/app.js"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "babel-cli": "^6.18.0",
-    "babel-preset-react": "^6.16.0"
+    "babel-preset-react": "^6.3.13",
+    "babelify": "^7.2.0",
+    "browserify": "^13.0.0",
+    "watchify": "^3.7.0"
+  },
+  "dependencies": {
+    "flux": "^2.1.1",
+    "react": "^0.14.6",
+    "react-dom": "^0.14.6"
+  },
+  "browserify": {
+    "transform": [["babelify", { "presets": ["react"] }]]
   }
 }
